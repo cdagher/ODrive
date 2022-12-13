@@ -16,11 +16,22 @@ public:
     void SetVelocity(int motor_number, float velocity);
     void SetVelocity(int motor_number, float velocity, float current_feedforward);
     void SetCurrent(int motor_number, float current);
+    void setTorque(int motor_number, float torque);
     void TrapezoidalMove(int motor_number, float position);
+
+    int readODriveErrors();
+    int readMotorErrors(int motor_number);
+    int readAxisErrors(int axis_number);
+    int readEncoderErrors(int encoder_number);
+    int readControllerErrors(int controller_number);
+
+    void reboot();
+    void clearErrors();
     // Getters
     float GetVelocity(int motor_number);
     float GetPosition(int motor_number);
     // General params
+    float readVoltage();
     float readFloat();
     int32_t readInt();
 

@@ -33,8 +33,50 @@ void ODriveArduino::SetCurrent(int motor_number, float current) {
     serial_ << "c " << motor_number << " " << current << "\n";
 }
 
+void ODriveArduino::setTorque(int motor_number, float torque) {
+    serial_ << "c " << motor_number << " " << torque << "\n";
+}
+
 void ODriveArduino::TrapezoidalMove(int motor_number, float position) {
     serial_ << "t " << motor_number << " " << position << "\n";
+}
+
+int ODriveArduino::readODriveErrors() {
+    serial_ << "error" << "\n";
+    return readString().toInt();
+}
+
+int ODriveArduino::readMotorErrors(int motor_number) {
+    serial_ << "r axis" << motor_number << ".motor.error" << "\n";
+    return readString().toInt();
+}
+
+int ODriveArduino::readAxisErrors(int axis_number) {
+    serial_ << "r axis" << axis_number << ".error" << "\n";
+    return readString().toInt();
+}
+
+int ODriveArduino::readEncoderErrors(int encoder_number) {
+    serial_ << "r axis" << encoder_number << ".encoder.error" << "\n";
+    return readString().toInt();
+}
+
+int ODriveArduino::readControllerErrors(int controller_number) {
+    serial_ << "r axis" << controller_number << ".controller.error" << "\n";
+    return readString().toInt();
+}
+
+void ODriveArduino::reboot() {
+    serial_ << "sr" << "\n";
+}
+
+void ODriveArduino::clearErrors() {
+    serial_ << "sc" << "\n";
+}
+
+float ODriveArduino::readVoltage() {
+    serial_ << "r bus_voltage" << "\n";
+    return readFloat();
 }
 
 float ODriveArduino::readFloat() {
